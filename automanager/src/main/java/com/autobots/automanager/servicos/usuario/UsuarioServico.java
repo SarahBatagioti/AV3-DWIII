@@ -106,6 +106,10 @@ public class UsuarioServico {
 				.map(respostaMapper::paraUsuario).collect(Collectors.toList());
 	}
 
+	public UsuarioRespostaDTO buscarPorId(Long usuarioId) {
+		return respostaMapper.paraUsuario(suporte.buscarUsuario(usuarioId));
+	}
+
 	public UsuarioRespostaDTO buscarDaEmpresa(Long empresaId, Long usuarioId) {
 		return respostaMapper.paraUsuario(suporte.buscarUsuarioDaEmpresa(empresaId, usuarioId));
 	}
@@ -128,6 +132,16 @@ public class UsuarioServico {
 	@Transactional
 	public UsuarioRespostaDTO atualizar(Long empresaId, Long usuarioId, UsuarioAtualizacaoDTO dto) {
 		Usuario usuario = suporte.buscarUsuarioDaEmpresa(empresaId, usuarioId);
+		return atualizarInterno(usuario, dto);
+	}
+
+	@Transactional
+	public UsuarioRespostaDTO atualizar(Long usuarioId, UsuarioAtualizacaoDTO dto) {
+		Usuario usuario = suporte.buscarUsuario(usuarioId);
+		return atualizarInterno(usuario, dto);
+	}
+
+	private UsuarioRespostaDTO atualizarInterno(Usuario usuario, UsuarioAtualizacaoDTO dto) {
 		usuarioAtualizador.atualizar(usuario, dto);
 		if (dto.getEndereco() != null) {
 			if (usuario.getEndereco() == null) {
@@ -141,6 +155,10 @@ public class UsuarioServico {
 
 	public void remover(Long empresaId, Long usuarioId) {
 		usuarioRepositorio.delete(suporte.buscarUsuarioDaEmpresa(empresaId, usuarioId));
+	}
+
+	public void remover(Long usuarioId) {
+		usuarioRepositorio.delete(suporte.buscarUsuario(usuarioId));
 	}
 
 	public EnderecoDTO buscarEndereco(Long usuarioId) {
