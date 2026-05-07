@@ -1,35 +1,41 @@
 package com.autobots.automanager.entidades;
 
-import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-import com.autobots.automanager.enumeracoes.TipoDocumento;
+import com.autobots.automanager.enumeracoes.TipoVeiculo;
 
 import lombok.Data;
 
 @Data
 @Entity
-public class Documento {
+public class Veiculo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private TipoDocumento tipo;
+	private TipoVeiculo tipo;
 	@Column(nullable = false)
-	private Date dataEmissao;
-	@Column(unique = true, nullable = false)
-	private String numero;
+	private String modelo;
+	@Column(nullable = false)
+	private String placa;
 	@ManyToOne
-	@JoinColumn(name = "usuario_id")
-	private Usuario usuario;
+	@JoinColumn(name = "proprietario_id", nullable = false)
+	private Usuario proprietario;
+	@OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Venda> vendas = new LinkedHashSet<>();
 }

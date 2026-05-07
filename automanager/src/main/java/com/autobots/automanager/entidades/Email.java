@@ -12,17 +12,12 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Telefone {
+public class Email {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false)
-	private String ddd;
-	@Column(nullable = false)
-	private String numero;
-	@ManyToOne
-	@JoinColumn(name = "empresa_id")
-	private Empresa empresa;
+	private String endereco;
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
