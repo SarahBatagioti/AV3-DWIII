@@ -88,9 +88,6 @@ public class VendaServico {
 		}
 		if (veiculoId != null) {
 			Veiculo veiculo = suporte.buscarVeiculo(veiculoId);
-			if (venda.getCliente() != null && !veiculo.getProprietario().getId().equals(venda.getCliente().getId())) {
-				throw new RequisicaoInvalidaException("Veículo não pertence ao cliente informado para a venda");
-			}
 			venda.setVeiculo(veiculo);
 		}
 		if (mercadoriasIds != null) {
@@ -107,12 +104,22 @@ public class VendaServico {
 				venda.getServicos().add(servico);
 			}
 		}
+		validarVeiculoDoCliente(venda);
 	}
 
 	private void validarIdentificacaoUnica(String identificacao, Long vendaAtualId) {
 		Optional<Venda> existente = vendaRepositorio.findByIdentificacao(identificacao);
 		if (existente.isPresent() && !existente.get().getId().equals(vendaAtualId)) {
-			throw new ConflitoDeRecursoException("Já existe venda cadastrada com a identificação informada");
+			throw new ConflitoDeRecursoException("JÃ¡ existe venda cadastrada com a identificaÃ§Ã£o informada");
+		}
+	}
+
+	private void validarVeiculoDoCliente(Venda venda) {
+		if (venda.getVeiculo() == null || venda.getCliente() == null) {
+			return;
+		}
+		if (!venda.getVeiculo().getProprietario().getId().equals(venda.getCliente().getId())) {
+			throw new RequisicaoInvalidaException("VeÃ­culo nÃ£o pertence ao cliente informado para a venda");
 		}
 	}
 }
