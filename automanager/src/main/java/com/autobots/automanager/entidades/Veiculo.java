@@ -19,6 +19,8 @@ import javax.persistence.OneToMany;
 import com.autobots.automanager.enumeracoes.TipoVeiculo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -35,7 +37,11 @@ public class Veiculo {
 	private String placa;
 	@ManyToOne
 	@JoinColumn(name = "proprietario_id", nullable = false)
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private Usuario proprietario;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Venda> vendas = new LinkedHashSet<>();
 }

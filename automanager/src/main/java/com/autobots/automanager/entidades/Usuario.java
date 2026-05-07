@@ -23,6 +23,8 @@ import javax.persistence.OneToOne;
 import com.autobots.automanager.enumeracoes.PerfilUsuario;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -45,19 +47,33 @@ public class Usuario {
 	private Set<PerfilUsuario> perfis = new LinkedHashSet<>();
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Endereco endereco;
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Set<Telefone> telefones = new LinkedHashSet<>();
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Set<Documento> documentos = new LinkedHashSet<>();
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Set<Email> emails = new LinkedHashSet<>();
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Set<Credencial> credenciais = new LinkedHashSet<>();
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany(mappedBy = "proprietario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Set<Veiculo> veiculos = new LinkedHashSet<>();
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	@OneToMany(mappedBy = "fornecedor", fetch = FetchType.EAGER)
 	private Set<Mercadoria> mercadorias = new LinkedHashSet<>();
 	@ManyToOne
 	@JoinColumn(name = "empresa_id", nullable = false)
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private Empresa empresa;
 }

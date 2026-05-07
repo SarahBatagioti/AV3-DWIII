@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import com.autobots.automanager.enumeracoes.TipoDocumento;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -31,5 +33,7 @@ public class Documento {
 	private String numero;
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private Usuario usuario;
 }

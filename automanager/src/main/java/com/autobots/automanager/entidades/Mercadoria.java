@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -34,8 +36,12 @@ public class Mercadoria {
 	private String descricao;
 	@ManyToOne
 	@JoinColumn(name = "empresa_id")
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private Empresa empresa;
 	@ManyToOne
 	@JoinColumn(name = "fornecedor_id")
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
 	private Usuario fornecedor;
 }
