@@ -24,8 +24,11 @@ import com.autobots.automanager.modelo.dto.venda.VendaRespostaDTO;
 import com.autobots.automanager.montadores.VendaModelAssembler;
 import com.autobots.automanager.servicos.venda.VendaServico;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/empresas/{empresaId}/vendas")
+@Tag(name = "Vendas", description = "Operações relacionadas a vendas")
 public class VendaControle {
 
 	@Autowired

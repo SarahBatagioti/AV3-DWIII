@@ -24,8 +24,11 @@ import com.autobots.automanager.modelo.dto.servico.ServicoRespostaDTO;
 import com.autobots.automanager.montadores.ServicoPrestadoModelAssembler;
 import com.autobots.automanager.servicos.servico.ServicoPrestadoServico;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/empresas/{empresaId}/servicos")
+@Tag(name = "Serviços", description = "Operações relacionadas a serviços prestados")
 public class ServicoPrestadoControle {
 
 	@Autowired

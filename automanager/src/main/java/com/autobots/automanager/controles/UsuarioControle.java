@@ -30,7 +30,13 @@ import com.autobots.automanager.montadores.UsuarioModelAssembler;
 import com.autobots.automanager.montadores.UsuarioSubrecursoModelAssembler;
 import com.autobots.automanager.servicos.usuario.UsuarioServico;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
+@Tag(name = "Usuários", description = "Operações relacionadas a usuários")
 public class UsuarioControle {
 
 	@Autowired
@@ -43,6 +49,11 @@ public class UsuarioControle {
 	private UsuarioSubrecursoModelAssembler subrecursoAssembler;
 
 	@GetMapping("/empresas/{empresaId}/usuarios")
+	@Operation(summary = "Listar usuários de uma empresa", description = "Retorna todos os usuários associados a uma empresa específica")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "Lista de usuários obtida com sucesso"),
+		@ApiResponse(responseCode = "404", description = "Empresa não encontrada")
+	})
 	public ResponseEntity<CollectionModel<EntityModel<UsuarioRespostaDTO>>> listarDaEmpresa(@PathVariable Long empresaId) {
 		return ResponseEntity.ok(assembler.toCollectionModel(empresaId, servico.listarDaEmpresa(empresaId)));
 	}

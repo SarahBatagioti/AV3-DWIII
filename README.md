@@ -74,6 +74,8 @@ Saída esperada:
 
 ## Como testar os endpoints da API
 
-Para testar todos os endpoints da API de forma completa, consulte o guia detalhado com exemplos prontos para copiar e colar:
+Para testar rapidamente pelo navegador, abra o Swagger em `http://localhost:8080/swagger-ui/index.html`, escolha o endpoint e clique em **Try it out**.
+
+Para ver exemplos prontos de todas as requisições, consulte o guia detalhado:
 
 👉 [Clique aqui para ver exemplos completos de todas as requisições](EXEMPLOS_API.md)

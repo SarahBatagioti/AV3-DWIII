@@ -24,8 +24,11 @@ import com.autobots.automanager.modelo.dto.mercadoria.MercadoriaRespostaDTO;
 import com.autobots.automanager.montadores.MercadoriaModelAssembler;
 import com.autobots.automanager.servicos.mercadoria.MercadoriaServico;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/empresas/{empresaId}/mercadorias")
+@Tag(name = "Mercadorias", description = "Operações relacionadas a mercadorias")
 public class MercadoriaControle {
 
 	@Autowired

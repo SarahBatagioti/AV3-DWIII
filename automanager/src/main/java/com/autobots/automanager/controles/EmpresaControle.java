@@ -27,8 +27,14 @@ import com.autobots.automanager.montadores.EmpresaModelAssembler;
 import com.autobots.automanager.montadores.EmpresaSubrecursoModelAssembler;
 import com.autobots.automanager.servicos.empresa.EmpresaServico;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/empresas")
+@Tag(name = "Empresas", description = "Operações relacionadas a empresas")
 public class EmpresaControle {
 
 	@Autowired
@@ -41,16 +47,30 @@ public class EmpresaControle {
 	private EmpresaSubrecursoModelAssembler subrecursoAssembler;
 
 	@GetMapping
+	@Operation(summary = "Listar todas as empresas", description = "Retorna uma lista com todas as empresas cadastradas")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "Lista de empresas obtida com sucesso")
+	})
 	public ResponseEntity<CollectionModel<EntityModel<EmpresaRespostaDTO>>> listar() {
 		return ResponseEntity.ok(assembler.toCollectionModel(servico.listar()));
 	}
 
 	@GetMapping("/{empresaId}")
+	@Operation(summary = "Buscar empresa por ID", description = "Busca uma empresa específica pelo seu ID")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "Empresa encontrada com sucesso"),
+		@ApiResponse(responseCode = "404", description = "Empresa não encontrada")
+	})
 	public ResponseEntity<EntityModel<EmpresaRespostaDTO>> buscarPorId(@PathVariable Long empresaId) {
 		return ResponseEntity.ok(assembler.toModel(servico.buscarPorId(empresaId)));
 	}
 
 	@PostMapping
+	@Operation(summary = "Cadastrar nova empresa", description = "Cria uma nova empresa com os dados fornecidos")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "201", description = "Empresa criada com sucesso"),
+		@ApiResponse(responseCode = "400", description = "Dados inválidos")
+	})
 	public ResponseEntity<EntityModel<EmpresaRespostaDTO>> cadastrar(@Valid @RequestBody EmpresaCadastroDTO dto) {
 		EmpresaRespostaDTO criada = servico.cadastrar(dto);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{empresaId}")
@@ -59,12 +79,22 @@ public class EmpresaControle {
 	}
 
 	@PutMapping("/{empresaId}")
+	@Operation(summary = "Atualizar empresa", description = "Atualiza os dados de uma empresa existente")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "Empresa atualizada com sucesso"),
+		@ApiResponse(responseCode = "404", description = "Empresa não encontrada")
+	})
 	public ResponseEntity<EntityModel<EmpresaRespostaDTO>> atualizar(@PathVariable Long empresaId,
 			@Valid @RequestBody EmpresaAtualizacaoDTO dto) {
 		return ResponseEntity.ok(assembler.toModel(servico.atualizar(empresaId, dto)));
 	}
 
 	@DeleteMapping("/{empresaId}")
+	@Operation(summary = "Remover empresa", description = "Rеmоvе umа еmprеsа dо sistеmа")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "204", description = "Empresa removida com sucesso"),
+		@ApiResponse(responseCode = "404", description = "Empresa não encontrada")
+	})
 	public ResponseEntity<Void> remover(@PathVariable Long empresaId) {
 		servico.remover(empresaId);
 		return ResponseEntity.noContent().build();
