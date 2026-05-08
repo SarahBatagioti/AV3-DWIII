@@ -1,0 +1,46 @@
+name: Multi-OS CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  validate:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Validate (Linux/macOS)
+        if: runner.os != 'Windows'
+        shell: bash
+        working-directory: automanager
+        env:
+          SPRING_PROFILES_ACTIVE: ci
+        run: |
+          chmod +x mvnw
+          ./mvnw -B -ntp verify
+
+      - name: Validate (Windows)
+        if: runner.os == 'Windows'
+        shell: cmd
+        working-directory: automanager
+        env:
+          SPRING_PROFILES_ACTIVE: ci
+        run: mvnw.cmd -B -ntp verify

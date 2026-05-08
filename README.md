@@ -79,3 +79,9 @@ Para testar rapidamente pelo navegador, abra o Swagger em `http://localhost:8080
 Para ver exemplos prontos de todas as requisições, consulte o guia detalhado:
 
 👉 [Clique aqui para ver exemplos completos de todas as requisições](EXEMPLOS_API.md)
+
+## Status do CI
+
+Este projeto possui CI com GitHub Actions em modo multi-OS. A cada push, o pipeline configura o Java, executa o build e valida os testes com Maven em Linux, Windows e macOS. Com o badge em verde, fica visível que o projeto foi validado com sucesso nos 3 sistemas operacionais.
+
+[![Multi-OS CI](https://github.com/SarahBatagioti/AV3-DWIII/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/SarahBatagioti/AV3-DWIII/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush)
